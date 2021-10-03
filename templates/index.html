@@ -5,7 +5,74 @@
 {% endblock %}
 
 {% block body %}
-<button class="voice-btn">
+<!-- <textarea name="write-text" id="write" cols="100" rows="20"></textarea> -->
+<div id="print-text" style="color:whitesmoke"></div>
+<button class="voice-btn" onclick="activate_voice()">
     <i class="fa fa-microphone microphone-ico"></i>
 </button>
+
+<script>
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+        var recognition = new SpeechRecognition() 
+        recognition.continuous = true;
+        recognition.interimResults = false;
+        recognition.lang = "en-IN";
+
+        recognition.onerror = function(event) {
+            console.error(event);
+        };
+
+        recognition.onstart = function() {
+        // console.log('asdadad')  
+        console.log('Speech recognition service has started');
+        };
+
+        recognition.onaudioend = function() {
+        console.log('Audio capturing ended');
+        }
+
+
+        recognition.onresult = function(event) {
+            var interim_transcript = '';
+            var final_transcript = '';
+            var print_text = document.getElementById('print-text')
+            // console.log(event)
+            for (var i = event.resultIndex; i < event.results.length; ++i) {
+                // Verify if the recognized text is the last with the isFinal property
+                
+                if (event.results[i].isFinal) {
+                    final_transcript += event.results[i][0].transcript;
+                } else {
+                    interim_transcript += event.results[i][0].transcript;
+                    
+                }
+                console.log("Interim: ", interim_transcript);
+                    // print_text.innerHTML+=interim_transcript
+            }
+
+            // Choose which result may be useful for you
+
+            // console.log("Interim: ", interim_transcript);
+            // var print_text = document.getElementById('print-text')
+            // print_text.innerHTML+=interim_transcript
+            
+            console.log("Final: ",final_transcript);
+            
+            recognition.stop()
+            var print_text = document.getElementById('print-text')
+            // final_transcript+=final_transcript+'<br/>'
+            print_text.innerHTML+=final_transcript+'<br/>'
+            // $('#keypad').val(final_transcript) //type in keypad what person said
+            // //press enter when input is typed 13 is code for enter
+            // var e = $.Event( "keypress", { which: 13 } );
+            // $('#keypad').trigger(e);
+        };
+    function activate_voice(){
+        // var print_text = document.getElementById('print-text')
+        //     print_text.innerHTML='final_transcript'
+        
+        recognition.start()
+    }
+</script>
 {% endblock %}

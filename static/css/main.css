@@ -12,6 +12,8 @@
     background-color: #031321;
     border: none;
     border-radius: 50%;
+    justify-content: center;
+    align-items: center;
   }
   
   .voice-btn:hover {
@@ -19,7 +21,7 @@
     background: #2196f3;
     box-shadow: 0 0 10px #2196f3, 0 0 40px #2196f3, 0 0 80px #2196f3;
   }
-  body {
+   body{
     margin: 0;
     padding: 0;
     display: flex;
@@ -28,5 +30,12 @@
     min-height: 100vh;
     background: #031321;
     font-family: consolas;
-    color: black;
+    /* color: black; */
   }  
+
+  /* #print-text {
+    margin: auto;
+    width: 60%;
+    border: 3px solid #73AD21;
+    padding: 10px;
+  } */
